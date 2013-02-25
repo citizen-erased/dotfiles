@@ -21,3 +21,5 @@ mkdir -p ~/.config/systemd/user
 ln -s ~/dotfiles/.config/systemd/user/mpd.service ~/.config/systemd/user/mpd.service 
 echo "make sure the following line is in .xinitrc before exec <session>:"
 echo "systemd --user &"
+
+ln -s ~/dotfiles/.ncmpcpp/config ~/.ncmpcpp/config
