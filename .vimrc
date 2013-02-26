@@ -24,6 +24,8 @@ set backup
 set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
 
+execute pathogen#infect()
+
 filetype plugin on
 
 set t_Co=256
