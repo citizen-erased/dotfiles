@@ -3,6 +3,7 @@
 import os
 import sys
 import inspect
+import argparse
 from subprocess import call
 
 #----------------------------------------------------------------------------#
@@ -48,6 +49,9 @@ def setup_git():
 
 
 def setup_zsh():
+    """
+    Installs zsh and oh-my-zsh.
+    """
     pacman('zsh')
     command('curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh')
     symlink('.zshrc')
@@ -161,14 +165,42 @@ def getFunctions():
     return sorted(functions, key=lambda x: x['command_name'])
 
 
+def parseArgs():
+    parser = argparse.ArgumentParser(description='')
+    parser.add_argument('--dry-run', '-d', action='store_true',
+        help='If specified no changes will be made.')
+
+    setup_cmds = [info['command_name'] for info in getFunctions()]
+    subparsers = parser.add_subparsers(help='', dest='setup_type')
+
+    # "all" subparser
+    subparser = subparsers.add_parser('all', help='setup all software.')
+
+    # "all-except" subparser
+    subparser = subparsers.add_parser('all-except', help='setup everything except the software specified.')
+    for info in getFunctions():
+        subparser.add_argument('--' + info['command_name'],
+            action='store_true', help=info['function'].__doc__)
+
+    # "only" subparser
+    subparser = subparsers.add_parser('only', help='setup only the software specified.')
+    for info in getFunctions():
+        subparser.add_argument('--' + info['command_name'],
+            action='store_true', help=info['function'].__doc__)
+
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
-    all_func_infos = getFunctions()
+    args = parseArgs()
+    infos = getFunctions()
 
-    print('available commands:')
-    for info in all_func_infos:
-        print('  ' + info['command_name'])
+    if args.setup_type == 'all-except':
+        infos = [f for f in infos if not getattr(args, f['command_name'])]
+    elif args.setup_type == 'only':
+        infos = [f for f in infos if getattr(args, f['command_name'])]
 
-    for func_info in all_func_infos:
+    for func_info in infos:
         print()
         print('-------- setup %s --------' % func_info['command_name'])
         func_info['function']()
