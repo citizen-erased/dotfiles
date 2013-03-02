@@ -8,9 +8,13 @@
     editor = vim
 
 [core]
+    editor = vim
+
     # Use common `.gitignore` and `.gitattributes`
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
+
+    # whitespace
     whitespace = blank-at-eol,space-before-tab
     eol = lf
 
