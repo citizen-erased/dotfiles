@@ -3,6 +3,10 @@
 #
 # A skeleton config with a full list of options and comments can be found in
 # /usr/share/doc/ncmpcpp/config
+#
+# User configs can be found at:
+#   https://bbs.archlinux.org/viewtopic.php?id=66488&p=1
+#   http://crunchbang.org/forums/viewtopic.php?id=19592
 ##############################################################################
 
 

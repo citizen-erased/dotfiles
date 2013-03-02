@@ -22,7 +22,7 @@ if_up_strictness address
 
 # Add spaces to keep things from moving about?  This only affects certain objects.
 # use_spacer should have an argument of left, right, or none
-use_spacer left
+use_spacer right
 
 # Force UTF8? note that UTF8 support required XFT
 override_utf8_locale no
@@ -34,14 +34,13 @@ cpu_avg_samples 2
 # Stuff after 'TEXT' will be formatted on screen
 TEXT
 [
-  { "full_text" : "" , "instance" : "${mpd_status}" },
-  { "full_text" : "${mpd_status}" , "color" : "\#C8C039" },
-  { "full_text" : "${if_mpd_playing}♪ ${mpd_artist} -${endif}" , "color" : "\#AAC1DE" } , { "full_text" : "${if_mpd_playing}${mpd_title} |${endif}" , "color" : "\#AAC1DE" },
-  { "full_text" : "/home ${fs_free /home/}" , "color" : "\#C89BDC" },
+  { "full_text" : "${if_match "$mpd_status" == "Playing"}♪ ${endif}${if_mpd_playing}${mpd_artist} - ${mpd_title}${endif}" , "color" : "\#AAC1DE" },
+  { "full_text" : "home ${fs_free /home/}" , "color" : "\#AFD787" },
+  { "full_text" : "data ${fs_free /mnt/data/}" , "color" : "\#AFD787" },
   { "full_text" : "RAM ${mem}" , "color" : "\#C89BDC" },
   { "full_text" : "CPU ${cpu}%" , "color" : "\#C89BDC" },
   { "full_text" : "Load ${loadavg 1} |" , "color" : "\#C89BDC" },
-  { "full_text" : "${upspeed enp0s16:} U" , "color" : "\#C89BDC" },
-  { "full_text" : "${downspeed enp0s16} D" , "color" : "\#C89BDC" },
+  { "full_text" : "${upspeed enp0s16:} ▲" , "color" : "\#C89BDC" },
+  { "full_text" : "${downspeed enp0s16} ▼" , "color" : "\#C89BDC" },
   { "full_text" : "${time %F %H:%M} " , "color" : "\#95FC7B"}
 ],
