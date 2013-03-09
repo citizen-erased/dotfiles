@@ -36,7 +36,12 @@ def setup_yaourt():
 
 
 def setup_rtorrent():
-    pass
+    pacman('rtorrent')
+    symlink('.rtorrent.rc')
+
+    dirs = ['downloading', '.session', 'watch']
+    for d in dirs:
+        ensureDir(os.path.join(home, 'rtorrent', d))
 
 
 def setup_web():
@@ -91,7 +96,7 @@ def setup_misc():
 
 def ensureDir(directory):
     if not os.path.exists(directory):
-        print('creating directory: %s' % dir)
+        print('creating directory: %s' % directory)
         if not dry_run:
             os.makedirs(directory)
 
